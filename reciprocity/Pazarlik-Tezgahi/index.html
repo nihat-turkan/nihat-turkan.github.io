@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pazarlık Tezgâhı · Interaction Island</title><link rel="stylesheet" href="fonts/fonts.css"><link rel="stylesheet" href="style.css"></head>
+<body class="day" data-experiment="02">
+<canvas id="fx" aria-label="Pazarlık Tezgâhı"></canvas>
+<section id="loadStatus" class="card load-status" role="status"><strong id="loadTitle">Tezgâh kuruluyor…</strong><p id="loadMessage">Loading the local character and rendering files.</p></section>
+<button type="button" class="btn standalone-mode" id="standaloneMode">NIGHT</button>
+<footer class="bottom-dock"><p class="caption serif" id="gameCaption"></p><details><summary>CONTROLS</summary><div class="controls-popover"><p id="gHint"></p></div></details></footer>
+  <div id="tags" class="game-only"></div>
+  <div class="game-toolbar game-only" id="gameToolbar">
+  <header class="card bar game-only">
+    <button class="btn" id="gameBack" type="button">RETURN TO ISLAND</button>
+    <div><h1 id="gTitle"></h1><small id="gSub"></small></div>
+  </header>
+  <div class="pills tabs game-only" role="group" aria-label="View">
+    <button type="button" data-tab="play" aria-pressed="true">PLAY</button>
+    <button type="button" data-tab="code" aria-pressed="false">CODE</button>
+    <button type="button" data-tab="notes" aria-pressed="false">NOTES</button>
+  </div>
+  <div class="card hud game-only" id="gHud"></div>
+  <div class="pause-tools game-only">
+    <button class="btn" id="pauseGame" type="button" aria-pressed="false">PAUSE</button>
+    <label><input id="autoPause" type="checkbox" checked> Pause while reading</label>
+    <span id="pauseStatus" role="status" aria-live="polite"></span>
+  </div>
+  </div>
+  <section class="card overlay game-only" id="overlay">
+    <small id="ovKick"></small>
+    <h2 id="overlayTitle"></h2>
+    <p class="serif" id="overlayText"></p>
+    <button class="btn go" id="ovCta" type="button"><b aria-hidden="true">▶</b><span id="overlayCta">CLICK TO START</span></button>
+    <div class="choices" id="ovChoices"></div>
+    <p class="err" id="ovErr" hidden></p>
+  </section>
+  <section class="win code" id="codeWin" hidden>
+    <div class="title"><button class="close" type="button" aria-label="Close code">×</button><span id="codeName">script.js</span></div>
+    <pre id="code"></pre>
+    <div class="foot"><span id="codeStatus"></span><button class="run" id="reset" type="button">↺ RESET</button></div>
+  </section>
+  <section class="win notes" id="notesWin" hidden>
+    <div class="title"><button class="close" type="button" aria-label="Close notes">×</button><span id="notesName">README.md</span></div>
+    <div class="body" id="notesBody"></div>
+  </section>
+  <div class="card anat game-only" id="gAnat"></div>
+  <section class="card deal game-only" id="dealPanel" aria-label="Pazarlık">
+    <small>BALIKÇI TEZGÂHI</small>
+    <div class="deal-items" id="dealItems" role="group" aria-label="Ürünler"></div>
+    <div class="deal-row"><span>KAPTAN İSTİYOR</span><b id="dealAsk">ürün seç</b></div>
+    <label class="deal-row" for="dealOffer"><span>TEKLİFİN</span><b id="dealOfferVal">–</b></label>
+    <input type="range" id="dealOffer" min="5" max="100" step="5" value="50">
+    <div class="deal-btns">
+      <button type="button" class="btn go" id="btnOffer"><b aria-hidden="true">₺</b>TEKLİF VER</button>
+      <button type="button" class="btn" id="btnKind"><b aria-hidden="true">♥</b>KAPTAN, BİR EL AT</button>
+      <button type="button" class="btn" id="btnDeal"><b aria-hidden="true">✓</b>ANLAŞTIK</button>
+      <button type="button" class="btn" id="btnLeave"><b aria-hidden="true">×</b>VAZGEÇTİM</button>
+    </div>
+    <ol class="deal-log" id="dealLog" aria-live="polite"></ol>
+  </section>
+  <div class="toast" id="toast"></div>
+
+
+<script src="engine.js"></script><script src="shell.js"></script><script src="script.js"></script><script type="module" src="runner.js"></script>
+</body></html>

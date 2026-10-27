@@ -1,0 +1,87 @@
+[
+  {
+    "family": "DM Sans",
+    "file": "dm-sans-0.ttf",
+    "source": "https://fonts.gstatic.com/s/dmsans/v17/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAopxhTg.ttf"
+  },
+  {
+    "family": "DM Sans",
+    "file": "dm-sans-1.ttf",
+    "source": "https://fonts.gstatic.com/s/dmsans/v17/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAkJxhTg.ttf"
+  },
+  {
+    "family": "Fraunces",
+    "file": "fraunces-0.ttf",
+    "source": "https://fonts.gstatic.com/s/fraunces/v38/6NVf8FyLNQOQZAnv9ZwNjucMHVn85Ni7emAe9lKqZTnbB-gzTK0K1ChJdt9vIVYX9G37lvd9sPEKsxx664UJf1hLTf7W.ttf"
+  },
+  {
+    "family": "Fraunces",
+    "file": "fraunces-1.ttf",
+    "source": "https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58nib1603gg7S2nfgRYIctxujDg.ttf"
+  },
+  {
+    "family": "Fraunces",
+    "file": "fraunces-2.ttf",
+    "source": "https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58nib1603gg7S2nfgRYIchRujDg.ttf"
+  },
+  {
+    "family": "IBM Plex Mono",
+    "file": "ibm-plex-mono-0.ttf",
+    "source": "https://fonts.gstatic.com/s/ibmplexmono/v20/-F63fjptAgt5VM-kVkqdyU8n5ig.ttf"
+  },
+  {
+    "family": "Instrument Serif",
+    "file": "instrument-serif-0.ttf",
+    "source": "https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf"
+  },
+  {
+    "family": "Instrument Serif",
+    "file": "instrument-serif-1.ttf",
+    "source": "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf"
+  },
+  {
+    "family": "Space Grotesk",
+    "file": "space-grotesk-0.ttf",
+    "source": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUUsj.ttf"
+  },
+  {
+    "family": "Space Grotesk",
+    "file": "space-grotesk-1.ttf",
+    "source": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7aUUsj.ttf"
+  },
+  {
+    "family": "Silkscreen",
+    "file": "silkscreen-0.ttf",
+    "source": "https://fonts.gstatic.com/s/silkscreen/v6/m8JXjfVPf62XiF7kO-i9ULQ.ttf"
+  },
+  {
+    "family": "Silkscreen",
+    "file": "silkscreen-1.ttf",
+    "source": "https://fonts.gstatic.com/s/silkscreen/v6/m8JUjfVPf62XiF7kO-i9aAhATms.ttf"
+  },
+  {
+    "family": "Pixelify Sans",
+    "file": "pixelify-sans-0.ttf",
+    "source": "https://fonts.gstatic.com/s/pixelifysans/v3/CHy2V-3HFUT7aC4iv1TxGDR9DHEserHN25py2TTp0H1Y.ttf"
+  },
+  {
+    "family": "Pixelify Sans",
+    "file": "pixelify-sans-1.ttf",
+    "source": "https://fonts.gstatic.com/s/pixelifysans/v3/CHy2V-3HFUT7aC4iv1TxGDR9DHEserHN25py2TQ3131Y.ttf"
+  },
+  {
+    "family": "VT323",
+    "file": "vt323-0.ttf",
+    "source": "https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2hsY.ttf"
+  },
+  {
+    "family": "IM Fell English",
+    "file": "im-fell-english-0.ttf",
+    "source": "https://fonts.gstatic.com/s/imfellenglish/v14/Ktk3ALSLW8zDe0rthJysWrnLsAzHFaOd.ttf"
+  },
+  {
+    "family": "IM Fell English",
+    "file": "im-fell-english-1.ttf",
+    "source": "https://fonts.gstatic.com/s/imfellenglish/v14/Ktk1ALSLW8zDe0rthJysWrnLsAz3Fw.ttf"
+  }
+]
