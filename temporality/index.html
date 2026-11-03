@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rewind Runner · Temporality</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Üst bant: başlık, premise ve HUD -->
+  <header class="top">
+    <div class="brand">
+      <span class="tag">04 · Temporality</span>
+      <h1>Rewind <span>Runner</span></h1>
+      <p class="premise">Interaction happens in time. <em>Design time as much as space.</em></p>
+    </div>
+    <dl class="hud">
+      <div><dt>Attempt</dt><dd id="hudAttempt">1</dd></div>
+      <div><dt>Rewinds</dt><dd id="hudRewinds">0</dd></div>
+      <div><dt>Position</dt><dd id="hudPos">0 m</dd></div>
+      <div><dt>Input lag</dt><dd id="hudLag">0 ms</dd></div>
+      <div><dt>Rewind</dt><dd id="hudRewind">3 s</dd></div>
+    </dl>
+  </header>
+
+  <main class="layout">
+    <!-- Sahne: stadyum, pist, koşucu ve zaman şeridi canvas'ta çiziliyor -->
+    <section class="stage-card" aria-labelledby="stageTitle">
+      <h2 id="stageTitle" class="sr-only">Race</h2>
+      <canvas id="stage" width="960" height="540" tabindex="0"
+              aria-label="Side view of a stadium track. A runner jumps hurdles. A timeline at the bottom shows the present, the stored history and the rewind window. Space or tap to jump, R to rewind."></canvas>
+      <p id="caption" class="caption">Press Space (or tap) to start.</p>
+      <div class="controls">
+        <button type="button" id="btnStart" class="primary">Start</button>
+        <button type="button" id="btnRewind" class="rewind">◀◀ Rewind</button>
+        <button type="button" id="btnReset">Reset</button>
+        <p class="keys"><kbd>Space</kbd> / <kbd>↑</kbd> / tap jump · <kbd>R</kbd> rewind · <kbd>P</kbd> pause · <kbd>Enter</kbd> start</p>
+      </div>
+    </section>
+
+    <!-- Karşılaştırma: bir seferde tek değişiklik -->
+    <section class="tests card" aria-labelledby="testsTitle">
+      <h2 id="testsTitle">Compare · one change at a time</h2>
+      <div class="test">
+        <h3><b>A</b> Memory</h3>
+        <p>Input lag stays 0 ms. Only how far back the rewind goes changes.</p>
+        <div class="row" role="group" aria-label="Memory test">
+          <button type="button" data-preset="rewind1">Rewind 1 s</button>
+          <button type="button" data-preset="rewind3">Rewind 3 s</button>
+        </div>
+      </div>
+      <div class="test">
+        <h3><b>B</b> Latency</h3>
+        <p>Rewind stays 3 s. Only the delay of your jump changes.</p>
+        <div class="row" role="group" aria-label="Latency test">
+          <button type="button" data-preset="lag0">Lag 0 ms</button>
+          <button type="button" data-preset="lag250">Lag 250 ms</button>
+        </div>
+      </div>
+      <p class="note">A preset starts a fresh trial: same course, traces and history cleared.</p>
+    </section>
+
+    <!-- Ekranda ne neyi gösteriyor -->
+    <section class="legend card" aria-labelledby="legendTitle">
+      <h2 id="legendTitle">What you see</h2>
+      <ul>
+        <li><i class="sw sw-now"></i><b>Present</b> the runner and the NOW playhead</li>
+        <li><i class="sw sw-hist"></i><b>Stored history</b> the blue bar: the last seconds the system remembers</li>
+        <li><i class="sw sw-rew"></i><b>Rewind offset</b> the striped amber window you jump back</li>
+        <li><i class="sw sw-last"></i><b>Last attempt</b> solid trace: where you jumped and fell</li>
+        <li><i class="sw sw-prev"></i><b>Attempt before</b> dashed trace, already fading</li>
+        <li><i class="sw sw-cue"></i><b>Arrival cue</b> seconds until the next hurdle</li>
+      </ul>
+    </section>
+
+    <!-- DESIGN anahtarları -->
+    <section class="knobs card" aria-labelledby="knobsTitle">
+      <h2 id="knobsTitle">Design · rules and signals</h2>
+      <div id="toggleList" class="toggle-list"></div>
+      <div id="rangeList" class="range-list"></div>
+    </section>
+
+    <!-- Anatomi -->
+    <section class="anatomy" aria-label="Input, rule, state, output">
+      <div><span>Input</span>space · tap · R</div>
+      <div><span>Rule</span>jump after lag · rewind(t − 3 s)</div>
+      <div class="hot"><span>State</span>history[ ] · traces[ ]</div>
+      <div><span>Output</span>runner · traces · timeline</div>
+    </section>
+  </main>
+
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
