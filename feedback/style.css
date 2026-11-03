@@ -1,0 +1,226 @@
+/* 03 · Feedback — Pace Track
+   Renkler tek başına anlam taşımıyor: her komutun harfi (S/J/W) ve şekli de var. */
+
+:root {
+  --paper: #f4eee2;
+  --card: #fffdf8;
+  --ink: #1d1b18;
+  --muted: #6b655c;
+  --line: #d9d0bf;
+  --hot: #e4572e;      /* Sprint */
+  --cool: #3a6ea5;     /* Jog */
+  --green: #4f8a4b;    /* Walk */
+  --track: #c9b79a;
+  --infield: #dfe8d2;
+  --focus: #1d1b18;
+  --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.4;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- üst bant ---------- */
+.top {
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end;
+  padding: 20px 24px 12px; max-width: 1180px; margin: 0 auto;
+}
+.tag { font: 600 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 34px/1.1 var(--serif); margin: 4px 0; }
+.premise { margin: 0; color: var(--muted); max-width: 52ch; }
+.premise em { color: var(--ink); }
+
+.hud { display: flex; gap: 8px; margin: 0; flex-wrap: wrap; }
+.hud div { background: var(--card); border: 1.5px solid var(--ink); border-radius: 8px; padding: 6px 10px; min-width: 88px; }
+.hud dt { font: 600 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.hud dd { margin: 0; font: 700 18px var(--mono); }
+
+/* ---------- yerleşim ---------- */
+.layout {
+  display: grid; gap: 14px; padding: 0 24px 32px; max-width: 1180px; margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-areas:
+    "stage side"
+    "plan  plan"
+    "controls controls"
+    "knobs knobs"
+    "anatomy anatomy";
+}
+.stage { grid-area: stage; }
+.side { grid-area: side; }
+.plan { grid-area: plan; }
+.controls { grid-area: controls; }
+.knobs { grid-area: knobs; }
+.anatomy { grid-area: anatomy; }
+
+.card { background: var(--card); border: 1.5px solid var(--ink); border-radius: 12px; padding: 14px 16px; }
+h2 { font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 10px; }
+
+/* ---------- pist ---------- */
+#track { width: 100%; height: auto; display: block; }
+.infield { fill: var(--infield); stroke: var(--ink); stroke-width: 1.5; }
+.track-base { fill: none; stroke: var(--track); stroke-width: 52; }
+.start-line { stroke: var(--ink); stroke-width: 3; stroke-dasharray: 4 3; }
+
+.seg { fill: none; stroke-width: 44; cursor: pointer; opacity: .32; transition: opacity .2s; }
+.seg.m-S { stroke: var(--hot); }
+.seg.m-J { stroke: var(--cool); }
+.seg.m-W { stroke: var(--green); }
+.seg:hover { opacity: .5; }
+.seg.is-current { opacity: .8; }
+.seg-outline { fill: none; stroke: var(--ink); stroke-width: 48; opacity: 0; pointer-events: none; }
+.seg-outline.is-current { opacity: 1; stroke-width: 50; }
+
+.label { cursor: pointer; }
+.label circle.chip { fill: var(--card); stroke: var(--ink); stroke-width: 2; }
+.label text.letter { font: 700 15px var(--mono); fill: var(--ink); pointer-events: none; }
+.label text.num { font: 600 10px var(--mono); fill: var(--muted); pointer-events: none; }
+.label .strike { stroke: var(--ink); stroke-width: 2.5; opacity: 0; }
+.label .edit-ring { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 3 3; opacity: 0; }
+.label .badge { opacity: 0; }
+.label .badge rect { fill: var(--ink); }
+.label .badge text { font: 700 10px var(--mono); fill: var(--card); }
+.label.has-mismatch .strike,
+.label.has-mismatch .badge { opacity: 1; }
+.label.bump .chip-wrap { animation: bump .35s ease-out; }
+.chip-wrap { transform-box: fill-box; transform-origin: center; }
+
+@keyframes bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.35); }
+  70% { transform: scale(.92); }
+  100% { transform: scale(1); }
+}
+
+/* maliyet halkası ve sayısı: sebep (parça) → sonuç (enerji) */
+.pulse-text { font: 700 14px var(--mono); fill: var(--ink); animation: rise 1.2s ease-out forwards; }
+.pulse-ring { fill: none; stroke: var(--ink); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring .8s ease-out forwards; }
+@keyframes rise { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-22px); } }
+@keyframes ring { from { opacity: .9; transform: scale(1); } to { opacity: 0; transform: scale(2.4); } }
+
+#runner { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 1px #fff); }
+#runner line, #runner .torso { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+#runner .head { fill: var(--ink); }
+
+.center-label { font: 700 15px var(--mono); fill: var(--ink); }
+
+.caption {
+  margin: 10px 0 0; font: italic 17px var(--serif); text-align: center; min-height: 1.4em;
+}
+
+/* ---------- enerji çubuğu ---------- */
+.meter-track {
+  position: relative; height: 220px; width: 64px; margin: 0 auto;
+  border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; background: var(--paper);
+}
+.meter-fill {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
+  background: var(--cool); transition: height .35s ease-out;
+}
+.meter.is-low .meter-fill {
+  /* düşük enerji: renk + çizgili desen (renk tek sinyal değil) */
+  background: repeating-linear-gradient(45deg, var(--hot) 0 6px, #f29a7d 6px 12px);
+}
+.meter-low {
+  position: absolute; left: 0; right: 0; border-top: 2px dashed var(--ink);
+}
+.meter-low span { position: absolute; right: 4px; top: 0; font: 600 10px var(--mono); }
+.meter-value { text-align: center; margin: 8px 0 0; font: 700 22px var(--mono); }
+.meter-value .zone { display: block; font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; min-height: 1.2em; }
+.meter-off { display: none; text-align: center; color: var(--muted); font-style: italic; }
+.meter.is-off .meter-track,
+.meter.is-off .meter-value { display: none; }
+.meter.is-off .meter-off { display: block; padding: 40px 0; }
+
+.legend { list-style: none; padding: 0; margin: 16px 0 8px; display: grid; gap: 6px; }
+.legend li { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.legend span { margin-left: auto; color: var(--muted); font: 12px var(--mono); }
+.rule-note { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+
+.glyph {
+  display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--ink); font: 700 13px var(--mono); background: var(--card); color: var(--ink);
+}
+.g-S { box-shadow: inset 0 -5px 0 var(--hot); }
+.g-J { box-shadow: inset 0 -5px 0 var(--cool); }
+.g-W { box-shadow: inset 0 -5px 0 var(--green); }
+
+/* ---------- plan şeridi ---------- */
+.plan-strip { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+.plan-btn {
+  display: grid; gap: 2px; justify-items: center; padding: 8px 4px;
+  border: 1.5px solid var(--ink); border-radius: 10px; background: var(--paper);
+  font: inherit; color: inherit; cursor: pointer; position: relative;
+}
+.plan-btn .num { font: 600 11px var(--mono); color: var(--muted); }
+.plan-btn .name { font-size: 13px; }
+.plan-btn .actual { font: 600 10px var(--mono); min-height: 1.3em; }
+.plan-btn.is-current { background: var(--ink); color: var(--card); }
+.plan-btn.is-current .num { color: var(--card); }
+.plan-btn.is-edited { outline: 2px dashed var(--ink); outline-offset: 3px; }
+.plan-btn.bump .glyph { animation: bump .35s ease-out; }
+.plan-btn:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+kbd { font: 600 11px var(--mono); border: 1px solid var(--ink); border-radius: 4px; padding: 0 4px; background: var(--paper); color: var(--ink); }
+
+/* ---------- kontroller ---------- */
+.controls { display: flex; flex-wrap: wrap; gap: 10px; }
+button {
+  font: 600 14px var(--sans); color: var(--ink); background: var(--paper);
+  border: 1.5px solid var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer;
+}
+button:hover { background: #ebe3d3; }
+button.primary { background: var(--ink); color: var(--card); min-width: 96px; }
+button.primary:hover { background: #3a3631; }
+
+/* ---------- DESIGN anahtarları ---------- */
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.presets button[aria-pressed="true"] { background: var(--ink); color: var(--card); }
+.knob-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 16px; }
+.knob { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; cursor: pointer; }
+.knob input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--ink); }
+.knob code { font: 600 13px var(--mono); }
+.knob small { display: block; color: var(--muted); font: 11px var(--mono); }
+.tempo { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; font-size: 14px; }
+.tempo output { font: 600 13px var(--mono); }
+
+/* ---------- anatomi ---------- */
+.anatomy { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--card); }
+.anatomy div { padding: 10px 12px; font: 13px var(--mono); border-right: 1.5px solid var(--ink); }
+.anatomy div:last-child { border-right: 0; }
+.anatomy span { display: block; font: 600 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.anatomy .hot { background: var(--hot); color: #fff; }
+.anatomy .hot span { color: #fff; }
+
+/* ---------- dar ekran ---------- */
+@media (max-width: 820px) {
+  .top { padding: 16px; }
+  .layout {
+    padding: 0 16px 24px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "stage" "side" "plan" "controls" "knobs" "anatomy";
+  }
+  .plan-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .anatomy { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .anatomy div:nth-child(2) { border-right: 0; }
+  .anatomy div:nth-child(-n+2) { border-bottom: 1.5px solid var(--ink); }
+  .meter-track { height: 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label.bump .chip-wrap, .plan-btn.bump .glyph, .pulse-ring { animation: none; }
+  .meter-fill { transition: none; }
+}

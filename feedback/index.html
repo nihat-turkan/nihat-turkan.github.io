@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pace Track · Feedback</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Üst bant: başlık, premise ve HUD (durum sayıları) -->
+  <header class="top">
+    <div class="title">
+      <span class="tag">03 · Feedback</span>
+      <h1>Pace Track</h1>
+      <p class="premise">The system’s state must be understandable. <em>Design the feedback loop, not the outcome.</em></p>
+    </div>
+    <dl class="hud" id="hud">
+      <div><dt>State</dt><dd id="hudState">–</dd></div>
+      <div><dt>Segment</dt><dd id="hudSegment">–</dd></div>
+      <div><dt>Energy</dt><dd id="hudEnergy">–</dd></div>
+      <div><dt>Plan → Now</dt><dd id="hudMode">–</dd></div>
+    </dl>
+  </header>
+
+  <main class="layout">
+    <!-- Sahne: oval pist (SVG). Parçalar ve koşucu script.js içinde çiziliyor -->
+    <section class="stage card" aria-labelledby="stageTitle">
+      <h2 id="stageTitle" class="sr-only">Track</h2>
+      <svg id="track" viewBox="0 0 600 360" role="img" aria-label="Oval running track with 8 segments. Each segment holds a command: Sprint, Jog or Walk.">
+        <rect class="infield" x="150" y="100" width="300" height="160" rx="80"/>
+        <path id="trackPath" class="track-base"
+              d="M300,290 H170 A110,110 0 0 1 170,70 H430 A110,110 0 0 1 430,290 Z"/>
+        <g id="segLayer"></g>
+        <line class="start-line" x1="300" y1="268" x2="300" y2="312"/>
+        <g id="labelLayer"></g>
+        <g id="pulseLayer"></g>
+        <g id="runner" aria-hidden="true">
+          <g id="runnerBody">
+            <g id="legBack"><line x1="0" y1="0" x2="0" y2="18"/></g>
+            <g id="armBack"><line x1="0" y1="0" x2="0" y2="12"/></g>
+            <line class="torso" x1="0" y1="-18" x2="0" y2="-32"/>
+            <g id="legFront"><line x1="0" y1="0" x2="0" y2="18"/></g>
+            <g id="armFront"><line x1="0" y1="0" x2="0" y2="12"/></g>
+            <circle class="head" cx="0" cy="-39" r="6"/>
+          </g>
+        </g>
+        <text id="centerLabel" class="center-label" x="300" y="186" text-anchor="middle"></text>
+      </svg>
+      <p id="caption" class="caption">Plan the track, then press Space to run.</p>
+    </section>
+
+    <!-- Yan panel: enerji çubuğu (gizli durumun görsel kanalı) -->
+    <aside class="side card" aria-labelledby="energyTitle">
+      <h2 id="energyTitle">Energy</h2>
+      <div class="meter" id="meter">
+        <div class="meter-track">
+          <div class="meter-fill" id="meterFill"></div>
+          <div class="meter-low" id="meterLow"><span>low</span></div>
+        </div>
+        <p class="meter-value"><span id="meterValue">100</span><span id="meterZone" class="zone"></span></p>
+        <p class="meter-off">Energy bar is off.</p>
+      </div>
+      <ul class="legend">
+        <li><b class="glyph g-S">S</b> Sprint <span>fast · −18</span></li>
+        <li><b class="glyph g-J">J</b> Jog <span>steady · −6</span></li>
+        <li><b class="glyph g-W">W</b> Walk <span>slow · +12</span></li>
+      </ul>
+      <p class="rule-note">Not enough energy for the planned pace? The runner drops one level: Sprint → Jog → Walk.</p>
+    </aside>
+
+    <!-- Plan şeridi: pistin erişilebilir kopyası (klavye ve dokunmatik) -->
+    <section class="plan card" aria-labelledby="planTitle">
+      <h2 id="planTitle">Plan</h2>
+      <div id="planStrip" class="plan-strip" role="group" aria-label="Track plan, 8 segments"></div>
+      <p class="hint">Click a segment on the track or here to change it · ← → move · <kbd>S</kbd> <kbd>J</kbd> <kbd>W</kbd> set · <kbd>Space</kbd> run / pause · <kbd>Z</kbd> undo · <kbd>R</kbd> reset</p>
+    </section>
+
+    <!-- Kontroller -->
+    <section class="controls card" aria-label="Controls">
+      <button type="button" id="btnRun" class="primary">Run</button>
+      <button type="button" id="btnUndo">Undo</button>
+      <button type="button" id="btnReset">Reset runner</button>
+      <button type="button" id="btnDefault">Default plan</button>
+    </section>
+
+    <!-- DESIGN anahtarları: geri bildirim kanallarını tek tek aç / kapa -->
+    <section class="knobs card" aria-labelledby="knobsTitle">
+      <h2 id="knobsTitle">Design · feedback channels</h2>
+      <div class="presets" role="group" aria-label="Comparison presets">
+        <button type="button" data-preset="all">All signals</button>
+        <button type="button" data-preset="visual">Visual only</button>
+        <button type="button" data-preset="sound">Sound only</button>
+      </div>
+      <div id="knobList" class="knob-list"></div>
+      <label class="tempo">Tempo (ms per jog segment)
+        <input type="range" id="tempo" min="800" max="2400" step="100">
+        <output id="tempoOut"></output>
+      </label>
+    </section>
+
+    <!-- Anatomi: girdi → kural → durum → çıktı -->
+    <section class="anatomy" aria-label="Input, rule, state, output">
+      <div><span>Input</span>click · keys · space</div>
+      <div><span>Rule</span>enterSegment() · resolveMode()</div>
+      <div class="hot"><span>State</span>track[8] · energy · segment</div>
+      <div><span>Output</span>runner · bar · steps · breath</div>
+    </section>
+  </main>
+
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
