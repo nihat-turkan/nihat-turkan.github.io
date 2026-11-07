@@ -53,10 +53,9 @@ All rules and numbers are in the `DESIGN` object at the top of `script.js`.
 
 ## AI note
 
-> ✏️ **Fill this in yourself and keep it honest.** Below is a suggested starting point based on what actually happened while building this project — edit it so it is true for you.
-
 - **Tool:** Claude (Claude Code) for idea discussion, code generation, testing and README structure.
 - **What I decided:** the premise pair, the hop / leap rule, the delayed bar, keeping rewind, the comparison (0 / 1.5 / 3 s).
-- **Rejected / corrected:** The AI first proposed "Echo Pass" and "Echo Cave"; I rejected both because a character replaying my past path was too close to the lab's Ghost Chase. *(Add one more of your own: e.g. a value you changed after testing.)*
+- **Rejected / corrected:** The AI first proposed "Echo Pass" and "Echo Cave"; I rejected both because a character replaying my past path was too close to the lab's Ghost Chase. After testing, I also changed the fall box: it first showed energy at the moment of the fall, which looked confusingly sufficient, so it now shows energy at take-off.
 - **Bug found in testing:** the weak leap was first 70 px high and still cleared the 70 px tall hurdle, so wasting energy had no cost. Hop height was lowered to 58 px.
-- The rationale text and the observations in it are my own.
+- **Live-change check:** the AI found that the leap-cooldown example in `LIVE-CHANGE.md` broke after a rewind; the guide was fixed before the presentation.
+- **Writing:** the playtest observation is my own. The AI drafted the theory and "What I learned" paragraphs in English from my notes and readings; I checked them against the papers and my observation.

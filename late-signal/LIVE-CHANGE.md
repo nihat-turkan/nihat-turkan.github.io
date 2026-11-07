@@ -55,13 +55,14 @@ DESIGN içine ekle:
 ```
 `function jump` içinde, `if (kind === 'leap') {` satırının hemen ÜSTÜNE ekle:
 ```js
-  if (kind === 'leap' && state.simT - (state.lastLeapT ?? -99) < DESIGN.leapCooldown) {
+  const sinceLeap = state.simT - (state.lastLeapT ?? -99);
+  if (kind === 'leap' && sinceLeap >= 0 && sinceLeap < DESIGN.leapCooldown) {
     flash('Leap is cooling down.');
     kind = 'hop';
   }
   if (kind === 'leap') state.lastLeapT = state.simT;
 ```
-Not: `kind = 'hop'` olunca alttaki leap bloğu hiç çalışmaz, kod hop yapar. Daha basit isteniyorsa `leapCost`'u artırmak da sıklığı sınırlar.
+Not: `kind = 'hop'` olunca alttaki leap bloğu hiç çalışmaz, kod hop yapar. `sinceLeap >= 0` kontrolü şart: Rewind veya Reset zamanı geri alınca `lastLeapT` eski (büyük) değerde kalır; bu kontrol olmadan leap uzun süre kilitlenirdi. Daha basit isteniyorsa `leapCost`'u artırmak da sıklığı sınırlar.
 **Söyle:** "Artık zaman sadece çubuğu değil, eylemin kendisini de sınırlıyor. Bekleme süresi görünmüyorsa bu yeni bir gizli durum olur; feedback olarak çubuğun yanına bir sayaç eklemek gerekir."
 
 ### 5. "Leap daha pahalı olsun" / "Enerji daha yavaş dolsun"
