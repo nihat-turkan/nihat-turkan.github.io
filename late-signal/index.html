@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Late Signal · Feedback × Temporality</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Üst bant: başlık, iki premise ve tek satırlık talimat -->
+  <header class="top">
+    <div class="brand">
+      <span class="tag">03 Feedback × 04 Temporality</span>
+      <h1>Late <span>Signal</span></h1>
+      <p class="instruction"><b>Hop</b> low hurdles, <b>leap</b> tall ones. Your energy bar is <b>late</b> — leap only when you really have the energy.</p>
+    </div>
+    <dl class="hud">
+      <div><dt>Attempt</dt><dd id="hudAttempt">1</dd></div>
+      <div><dt>Rewinds</dt><dd id="hudRewinds">0</dd></div>
+      <div><dt>Position</dt><dd id="hudPos">0 m</dd></div>
+      <div><dt>Bar delay</dt><dd id="hudDelay">1.5 s</dd></div>
+    </dl>
+  </header>
+
+  <main class="layout">
+    <!-- Sahne: stadyum, koşucu, gecikmeli enerji çubuğu ve zaman şeridi canvas'ta -->
+    <section class="stage-card" aria-labelledby="stageTitle">
+      <h2 id="stageTitle" class="sr-only">Race</h2>
+      <canvas id="stage" width="960" height="540" tabindex="0"
+              aria-label="Side view of a stadium track. A runner hops and leaps hurdles. The energy bar at the top right shows the runner's energy from a moment ago. A timeline at the bottom shows the present, the stored history, the moment the bar is showing and the rewind window."></canvas>
+      <p id="caption" class="caption">Press Space (or tap) to start.</p>
+      <!-- etiketli butonlar: dokunmatik ve fare için klavyeye eşdeğer girdi -->
+      <div class="pad" role="group" aria-label="Actions">
+        <button type="button" id="btnHop" class="act hop">Hop <small>Space · ↑</small></button>
+        <button type="button" id="btnLeap" class="act leap">Leap <small>Shift · X</small></button>
+        <button type="button" id="btnRewind" class="act rewind">◀◀ Rewind <small>R</small></button>
+      </div>
+      <div class="controls">
+        <button type="button" id="btnStart" class="primary">Start</button>
+        <button type="button" id="btnReset">Reset</button>
+        <p class="keys"><kbd>Space</kbd> hop · <kbd>Shift</kbd>/<kbd>X</kbd> leap · <kbd>R</kbd> rewind · <kbd>P</kbd> pause · <kbd>Enter</kbd> start</p>
+      </div>
+    </section>
+
+    <!-- Karşılaştırma: tek kural değişir -->
+    <section class="tests card" aria-labelledby="testsTitle">
+      <h2 id="testsTitle">Compare · one rule changes</h2>
+      <p>Same course, same energy rules. Only <b>how late the bar is</b> changes.</p>
+      <div class="row" role="group" aria-label="Feedback delay">
+        <button type="button" data-preset="delay0">Live bar<br><small>0 s</small></button>
+        <button type="button" data-preset="delay15">Late bar<br><small>1.5 s</small></button>
+        <button type="button" data-preset="delay3">Very late<br><small>3 s</small></button>
+      </div>
+      <p class="note">A preset starts a fresh trial: history and traces are cleared.</p>
+    </section>
+
+    <!-- Ekranda ne neyi gösteriyor -->
+    <section class="legend card" aria-labelledby="legendTitle">
+      <h2 id="legendTitle">How to read it</h2>
+      <ul>
+        <li><i class="sw sw-bar"></i><b>Energy bar</b> your energy <em>as it was</em> a moment ago</li>
+        <li><i class="sw sw-cost"></i><b>LEAP line</b> energy a leap costs (40)</li>
+        <li><i class="sw sw-shown"></i><b>Purple mark</b> on the timeline: the moment the bar shows</li>
+        <li><i class="sw sw-rew"></i><b>Rewind window</b> how far R takes you back</li>
+        <li><i class="sw sw-last"></i><b>Solid trace</b> last attempt · <i class="sw sw-prev"></i>dashed: the one before</li>
+      </ul>
+    </section>
+
+    <!-- DESIGN anahtarları -->
+    <section class="knobs card" aria-labelledby="knobsTitle">
+      <h2 id="knobsTitle">Design · rules and signals</h2>
+      <div id="toggleList" class="toggle-list"></div>
+      <div id="rangeList" class="range-list"></div>
+    </section>
+
+    <!-- Anatomi -->
+    <section class="anatomy" aria-label="Input, rule, state, output">
+      <div><span>Input</span>hop · leap · rewind</div>
+      <div><span>Rule</span>leap costs 40 · bar = energy(t − delay)</div>
+      <div class="hot"><span>State</span>energy · history[ ]</div>
+      <div><span>Output</span>late bar · runner · traces</div>
+    </section>
+  </main>
+
+  <footer class="credits">
+    Late Signal · NMED 3203 midterm · combines premises 03 Feedback and 04 Temporality from the
+    <a href="https://mertseven.com/ima/lab/index.html">Interactive Media Applications lab</a> (Mert Seven).
+    Readings: Hutchins, Hollan &amp; Norman (1985); Jota et al. (2013). All graphics and sounds are generated in code. See README for credits and AI note.
+  </footer>
+
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
