@@ -371,10 +371,10 @@ document.addEventListener('keydown', (e) => {
   if (e.target instanceof HTMLInputElement) return; // kaydırıcı / onay kutusu kendi tuşlarını kullanır
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   const k = e.key.toLowerCase();
-  if (e.code === 'Space' || e.key === 'ArrowUp') {
+  if (k === 'a' || e.code === 'Space' || e.key === 'ArrowUp') {
     e.preventDefault();
     if (!e.repeat) act('hop');
-  } else if (e.key === 'Shift' || k === 'x') {
+  } else if (k === 's' || e.key === 'Shift' || k === 'x') {
     if (!e.repeat) act('leap');
   } else if (k === 'r') {
     startRewind();
@@ -738,8 +738,8 @@ function drawHurdles(cam, t) {
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -hh + 4); ctx.moveTo(-14, 0); ctx.lineTo(12, 0); ctx.stroke();
     ctx.restore();
     if (ang === 0) {
-      ctx.font = mono(10, 800); ctx.fillStyle = h.tall ? '#c6f432' : 'rgba(255,255,255,.8)';
-      ctx.textAlign = 'center'; ctx.fillText(h.tall ? 'LEAP' : 'HOP', x + 4, FOOT_Y - hh - 16); ctx.textAlign = 'left';
+      ctx.font = mono(13, 900); ctx.fillStyle = h.tall ? '#c6f432' : '#ffffff';
+      ctx.textAlign = 'center'; ctx.fillText(h.tall ? 'LEAP · S' : 'HOP · A', x + 4, FOOT_Y - hh - 16); ctx.textAlign = 'left';
     }
   }
 }
@@ -849,10 +849,20 @@ function drawEnergyBar(v) {
   ctx.fillStyle = '#9aa6cc';
   ctx.fillText('ENERGY', x + 12, y + 18);
   if (DESIGN.showDelayLabel) {
+    // playtest sonrası: etiket artık dolu bir rozet; leap'ten sonra çubuk geride kaldığı sürece yanıp söner
+    const label = delay > 0 ? `◷ SHOWN ${delay} s AGO` : '● LIVE';
+    ctx.font = mono(12, 900);
+    const tw = ctx.measureText(label).width, px = x + w - 10 - tw - 14, py = y + 5;
+    let lastLeap = null;
+    for (let i = state.events.length - 1; i >= 0; i--) if (state.events[i].type === 'leap') { lastLeap = state.events[i]; break; }
+    const behind = delay > 0 && lastLeap && v.t - lastLeap.t >= 0 && v.t - lastLeap.t < delay;
+    ctx.globalAlpha = behind ? 0.55 + 0.45 * Math.abs(Math.sin(state.clock * 8)) : 1;
     ctx.fillStyle = delay > 0 ? '#b388ff' : '#c6f432';
-    ctx.textAlign = 'right';
-    ctx.fillText(delay > 0 ? `◷ SHOWN ${delay} s AGO` : '● LIVE', x + w - 12, y + 18);
-    ctx.textAlign = 'left';
+    roundRect(px, py, tw + 14, 18, 9); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#0a0f24';
+    ctx.fillText(label, px + 7, py + 13);
+    ctx.font = mono(11, 800);
   }
   // çubuk
   const bx = x + 12, by = y + 28, bw = w - 70, bh = 18;
@@ -1102,7 +1112,7 @@ function drawOverlays(v) {
     ctx.fillStyle = '#b388ff'; ctx.font = font(64);
     ctx.fillText('LATE SIGNAL', W / 2, 200);
     ctx.fillStyle = '#fff'; ctx.font = font(20, 800, false);
-    ctx.fillText('HOP low hurdles for free. LEAP tall hurdles for 40 energy.', W / 2, 244);
+    ctx.fillText('A = HOP low hurdles (free).  S = LEAP tall hurdles (40 energy).', W / 2, 244);
     ctx.fillText('Your energy bar is late. Leap only when you really have it.', W / 2, 272);
     ctx.globalAlpha = 0.6 + 0.4 * Math.sin(state.clock * 4);
     ctx.fillStyle = '#c6f432'; ctx.font = font(22);

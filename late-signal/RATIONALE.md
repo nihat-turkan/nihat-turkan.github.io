@@ -19,11 +19,11 @@ Jota et al. (2013) varied touch latency between 1 and 50 ms in a dragging task a
 
 ## What I learned
 
-I let a friend play without explanation. They pressed only Space and crashed into tall hurdles until they read the text beside the game. Then they leapt every hurdle, ran out of energy and fell. They never noticed the "SHOWN 1.5 s AGO" label or read the REAL / BAR box, so the delay stayed invisible.
+I let a friend play without explanation. They pressed only Space and hit tall hurdles until reading the side text, then leapt everything and ran out of energy. They never noticed the delay label. So I added the A / S keys they suggested, printed them on the hurdles and turned the delay label into a flashing badge.
 
 ---
 
-*Word count (rationale text, excluding headings and references): 379*
+*Word count (rationale text, excluding headings and references): 381*
 
 ## References
 

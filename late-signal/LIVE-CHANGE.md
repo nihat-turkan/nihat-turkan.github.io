@@ -42,6 +42,14 @@ Hoca sunumda küçük bir değişiklik isteyecek. Hepsi `script.js` içinde. Sat
 
 ### 2. "Geri bildirimi kaldır" / "Bir modda çubuğu kapat"
 `showEnergyBar: true` → `false` (ya da panelde **Energy bar** kutusunun işaretini kaldır).
+
+**Sadece BİR modda kapatmak için** (brifteki örnek: "remove the feedback from one mode"): `const PRESETS` (satır 80) içini şöyle yap:
+```js
+  delay0: { feedbackDelay: 0, showEnergyBar: true },
+  delay15: { feedbackDelay: 1.5, showEnergyBar: true },
+  delay3: { feedbackDelay: 3, showEnergyBar: false }
+```
+Artık **Very late (3 s)** butonu çubuğu gizler, diğer iki buton geri açar. (Paneldeki onay kutusu kendiliğinden güncellenmez; sorun değil, çubuk yine doğru davranır.)
 **Söyle:** "Feedback tamamen gitti; oyuncu artık sadece zayıf zıplamadan ve düşmeden öğrenebiliyor. Gecikmeli çubuk bile hiç çubuk olmamasından daha çok bilgi veriyor mu, bunu karşılaştırabiliriz."
 
 ### 3. "Girdileri yer değiştir"

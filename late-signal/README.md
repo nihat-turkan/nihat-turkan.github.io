@@ -7,11 +7,11 @@
 
 ## How to use
 
-- **Hop** low (red-white) hurdles for free: `Space`, `↑`, the **Hop** button, or tap the track.
-- **Leap** tall (lime-navy) hurdles for 40 energy: `Shift`, `X`, or the **Leap** button.
+- **Hop** low (red-white) hurdles for free: `A`, `Space`, `↑`, the **Hop** button, or tap the track.
+- **Leap** tall (lime-navy) hurdles for 40 energy: `S`, `Shift`, `X`, or the **Leap** button.
   Without 40 energy a leap becomes a weak hop and you hit the tall hurdle.
 - Energy refills by itself (15 per second).
-- The bar at the top right is **late**: it shows your energy from `feedbackDelay` seconds ago.
+- The bar at the top right is **late**: it shows your energy from `feedbackDelay` seconds ago. The purple "SHOWN … s AGO" badge flashes while the bar is still behind a leap.
 - Fall? Press `R` (or **Rewind**) to go back 3 seconds. The failed attempt stays on the track as a fading trace.
 - `P` pause · `Enter` start · **Reset** clears all history and traces.
 - Compare: **Live bar (0 s)**, **Late bar (1.5 s)**, **Very late (3 s)**. Only the delay changes.
