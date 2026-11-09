@@ -30,9 +30,9 @@ const DESIGN = {
   energyRegen: 15,      // enerji/sn · sürekli dolar
 
   // TEMPORALITY: çubuğun gecikmesi
-  feedbackDelay: 1,5,   // sn · çubuk bu kadar önceki enerjiyi gösterir (0 = canlı)
+  feedbackDelay: 1.5,   // sn · çubuk bu kadar önceki enerjiyi gösterir (0 = canlı)
   showEnergyBar: true,  // çubuğu tamamen gizle / göster
-  showDelayLabel: true, // çubuğun üstünde "1,5 s AGO" etiketi
+  showDelayLabel: true, // çubuğun üstünde "1.5 s AGO" etiketi
 
   // geri sarma ve hafıza
   rewindLength: 3,      // sn · R ile kaç saniye geri gidilir
