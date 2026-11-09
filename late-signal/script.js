@@ -24,9 +24,9 @@ const DESIGN = {
   pxPerMeter: 50,
 
   // FEEDBACK: gizli durum = enerji
-  maxEnergy: 100,
+  maxEnergy: 200,
   startEnergy: 100,
-  leapCost: 40,         // LEAP bu kadar enerji harcar; yetmezse zayıf zıplama (= hop) olur
+  leapCost: 30,         // LEAP bu kadar enerji harcar; yetmezse zayıf zıplama (= hop) olur
   energyRegen: 15,      // enerji/sn · sürekli dolar
 
   // TEMPORALITY: çubuğun gecikmesi
